@@ -52,7 +52,7 @@ export default function Home() {
             Built specifically for your company's workflow.
           </p>
           {session ? (
-            <Button size="lg" className="gap-2">
+            <Button onClick={() => router.push("/dashboard")} size="lg" className="gap-2">
               Go to Dashboard
               <ArrowRight className="h-5 w-5" />
             </Button>
