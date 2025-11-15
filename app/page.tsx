@@ -1,7 +1,5 @@
-"use client";
-
-import { useSession } from "@/lib/auth-client";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { getSession } from "@/lib/auth-server";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -15,27 +13,14 @@ import {
   ArrowRight,
   ShieldCheck,
   Clock,
-  Loader2
 } from "lucide-react";
 
-export default function Home() {
-  const { data: session, isPending } = useSession();
-  const router = useRouter();
-
-  if (isPending) {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <div className="text-center">
-          <Loader2 className="h-12 w-12 animate-spin text-foreground mx-auto mb-4" />
-          <p className="text-lg text-muted-foreground">Loading...</p>
-        </div>
-      </div>
-    );
-  }
+export default async function Home() {
+  const session = await getSession();
 
   return (
     <div className="min-h-screen">
-      <Header />
+      <Header session={session} />
 
       {/* Hero Section */}
       <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20">
@@ -52,14 +37,18 @@ export default function Home() {
             Built specifically for your company's workflow.
           </p>
           {session ? (
-            <Button onClick={() => router.push("/dashboard")} size="lg" className="gap-2">
-              Go to Dashboard
-              <ArrowRight className="h-5 w-5" />
+            <Button asChild size="lg" className="gap-2">
+              <Link href="/dashboard">
+                Go to Dashboard
+                <ArrowRight className="h-5 w-5" />
+              </Link>
             </Button>
           ) : (
-            <Button onClick={() => router.push("/sign-in")} size="lg" className="gap-2">
-              Get Started
-              <ArrowRight className="h-5 w-5" />
+            <Button asChild size="lg" className="gap-2">
+              <Link href="/sign-in">
+                Get Started
+                <ArrowRight className="h-5 w-5" />
+              </Link>
             </Button>
           )}
         </div>

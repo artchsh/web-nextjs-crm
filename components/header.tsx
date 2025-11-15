@@ -1,19 +1,13 @@
-"use client";
-
-import { useSession, signOut } from "@/lib/auth-client";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ShieldCheck } from "lucide-react";
+import { SignOutButton } from "@/components/sign-out-button";
 
-export function Header() {
-    const { data: session } = useSession();
-    const router = useRouter();
+interface HeaderProps {
+    session?: any;
+}
 
-    const handleSignOut = async () => {
-        await signOut();
-        router.refresh();
-    };
-
+export function Header({ session }: HeaderProps) {
     return (
         <header className="sticky top-0 z-50 w-full border-b border-neutral-800 bg-black supports-backdrop-filter:bg-background/60">
             <div className="container mx-auto flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
@@ -31,13 +25,13 @@ export function Header() {
                                 {session.user?.name}
                             </span>
                         </div>
-                        <Button onClick={handleSignOut} size="sm" variant={"secondary"}>
-                            Sign Out
-                        </Button>
+                        <SignOutButton />
                     </div>
                 ) : (
-                    <Button onClick={() => router.push("/sign-in")} size="sm">
-                        Sign In
+                    <Button asChild size="sm">
+                        <Link href="/sign-in">
+                            Sign In
+                        </Link>
                     </Button>
                 )}
             </div>

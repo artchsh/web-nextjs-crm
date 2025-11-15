@@ -5,16 +5,25 @@ import "./globals.css";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+  display: "swap",
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Internal CRM - Client Management System",
+  title: {
+    default: "Internal CRM - Client Management System",
+    template: "%s | Internal CRM",
+  },
   description: "Internal CRM for managing client server credentials and tracking tasks",
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
 
 export default function RootLayout({
